@@ -17,41 +17,55 @@
     </div>
     <div v-else>
       <card v-if="!finished">
-        <b-form @submit="onSubmit" v-if="show" class="m-5">
-          <b-form-group class="mb-4" :label="$t('project_name')">
-            <b-form-input size="lg" v-model="form.name" required></b-form-input>
-          </b-form-group>
-          <b-form-group class="mb-4" :label="$t('client')">
-            <b-form-select size="lg" v-model="form.client_id" :options="clients" required></b-form-select>
-          </b-form-group>
-          <b-row class="mb-4">
-            <b-col>
-              <b-form-group :label="$t('project_type')">
-                <b-form-select size="lg" v-model="form.type" :options="types" required></b-form-select>
-              </b-form-group>
-            </b-col>
-            <b-col v-if="(form.type != 'free')">
-              <b-form-group :label="$t('desired_price_hour')" v-if="(form.type == 'hours')">
-                <b-input-group append="€">
-                  <b-form-input size="lg" v-model="form.desired_price_hour" required></b-form-input>
-                </b-input-group>
-              </b-form-group>
-              <b-form-group :label="$t('total_price')" v-else>
-                <b-input-group append="€">
-                  <b-form-input size="lg" v-model="form.total_price" required></b-form-input>
-                </b-input-group>
-              </b-form-group>
-            </b-col>
-            <b-col>
-              <b-form-group :label="$t('hours_estimated')">
-                <b-input-group :append="$t('hours')">
-                  <b-form-input size="lg" v-model="form.hours_estimated" required></b-form-input>
-                </b-input-group>
-              </b-form-group>
-            </b-col>
-          </b-row>
-          <b-button type="submit" variant="primary">{{ $t('create') }}</b-button>
-        </b-form>
+        <div v-if="(Object.values(clients).length == 0)">
+          <div class="text-center mt-5 mb-5">
+            <h4>{{ $t('onboarding_no_clients') }}</h4>
+            <p>{{ $t('onboarding_no_clients_text') }}</p>
+            <p><img src="/img/vector/clients.jpg"/></p>
+            <router-link :to="{ name: 'client.add' }">
+              <button class="btn btn-primary">
+                {{ $t('onboarding_no_clients_add') }}
+              </button>
+            </router-link>
+          </div>
+        </div>
+        <div v-else>
+          <b-form @submit="onSubmit" v-if="show" class="m-5">
+            <b-form-group class="mb-4" :label="$t('project_name')">
+              <b-form-input size="lg" v-model="form.name" required></b-form-input>
+            </b-form-group>
+            <b-form-group class="mb-4" :label="$t('client')">
+              <b-form-select size="lg" v-model="form.client_id" :options="clients" required></b-form-select>
+            </b-form-group>
+            <b-row class="mb-4">
+              <b-col>
+                <b-form-group :label="$t('project_type')">
+                  <b-form-select size="lg" v-model="form.type" :options="types" required></b-form-select>
+                </b-form-group>
+              </b-col>
+              <b-col v-if="(form.type != 'free')">
+                <b-form-group :label="$t('desired_price_hour')" v-if="(form.type == 'hours')">
+                  <b-input-group append="€">
+                    <b-form-input size="lg" v-model="form.desired_price_hour" required></b-form-input>
+                  </b-input-group>
+                </b-form-group>
+                <b-form-group :label="$t('total_price')" v-else>
+                  <b-input-group append="€">
+                    <b-form-input size="lg" v-model="form.total_price" required></b-form-input>
+                  </b-input-group>
+                </b-form-group>
+              </b-col>
+              <b-col>
+                <b-form-group :label="$t('hours_estimated')">
+                  <b-input-group :append="$t('hours')">
+                    <b-form-input size="lg" v-model="form.hours_estimated" required></b-form-input>
+                  </b-input-group>
+                </b-form-group>
+              </b-col>
+            </b-row>
+            <b-button type="submit" variant="primary">{{ $t('create') }}</b-button>
+          </b-form>
+        </div>
       </card>
       <card v-else class="text-center p-5">
         <h3 class="mb-4">{{ $t('project_succesfully_added')}}</h3>

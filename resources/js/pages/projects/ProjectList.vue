@@ -15,48 +15,61 @@
     </div>
     <div v-else>
       <card id="dashboard">
-        <SortableList lockAxis="y" v-model="items" @input="saveOrder()" :distance="10">
-          <SortableItem v-for="(item, index) in items" :index="parseInt(index)" :key="parseInt(index)" :value="item">
-            <div class="col-11 col-sm-6">
-              <div class="row">
-                <div class="col-sm-1 col-2 text-right">
-                  <BIconStar @click="toggleFocus(index, item.id)" class="pointer pull-right" v-if="(item.focus == 0)" v-b-tooltip.hover :title="$t('mark_as_focus')"/>
-                  <BIconStarFill @click="toggleFocus(index, item.id)" class="pointer pull-right" v-else v-b-tooltip.hover :title="$t('unmark_as_focus')"/>
-                </div>
-                <div class="col-sm-11 col-10">
-                  <span class="project-name">
-                    <router-link :to="{ name: 'project.home', params: { id: item.id } }">
-                      {{ item.name }}
-                    </router-link>
-                  </span>
-                  <span class="client-name">{{ item.client }}</span>
+        <div v-if="(items.length == 0)">
+          <div class="text-center mt-5 mb-5">
+            <h4>{{ $t('onboarding_no_projects') }}</h4>
+            <p><img src="/img/vector/start-nothing.jpg"/></p>
+            <router-link :to="{ name: 'project.add' }">
+              <button class="btn btn-primary">
+                {{ $t('onboarding_no_projects_add') }}
+              </button>
+            </router-link>
+          </div>
+        </div>
+        <div v-else>
+          <SortableList lockAxis="y" v-model="items" @input="saveOrder()" :distance="10">
+            <SortableItem v-for="(item, index) in items" :index="parseInt(index)" :key="parseInt(index)" :value="item">
+              <div class="col-11 col-sm-6">
+                <div class="row">
+                  <div class="col-sm-1 col-2 text-right">
+                    <BIconStar @click="toggleFocus(index, item.id)" class="pointer pull-right" v-if="(item.focus == 0)" v-b-tooltip.hover :title="$t('mark_as_focus')"/>
+                    <BIconStarFill @click="toggleFocus(index, item.id)" class="pointer pull-right" v-else v-b-tooltip.hover :title="$t('unmark_as_focus')"/>
+                  </div>
+                  <div class="col-sm-11 col-10">
+                    <span class="project-name">
+                      <router-link :to="{ name: 'project.home', params: { id: item.id } }">
+                        {{ item.name }}
+                      </router-link>
+                    </span>
+                    <span class="client-name">{{ item.client }}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-1 col-sm-1">
-              <router-link :to="{ name: 'project.tasks', params: { id: item.id } }">
-                <h2>
-                  <BIconListTask variant="secondary"/>
-                </h2>
-              </router-link>
-            </div>
-            <div class="col-4 col-sm-1 text-left text-sm-right">
-              {{ item.hours_estimated }}<br/>
-              {{ item.hours }}
-            </div>
-            <div class="col-4 col-sm-2 text-center text-sm-right" v-if="(item.type != 'free')">
-              {{ item.desired_price_hour }}<br/>
-              {{ item.price_hour }}
-            </div>
-            <div class="col-4 col-sm-2 text-right" v-if="(item.type != 'free')">
-              {{ item.total }}<br/>
-              {{ item.balance }}
-            </div>
-            <div class="col-4 text-center" v-if="(item.type == 'free')">
-              <p>Free project</p>
-            </div>
-          </SortableItem>
-        </SortableList>
+              <div class="col-1 col-sm-1">
+                <router-link :to="{ name: 'project.tasks', params: { id: item.id } }">
+                  <h2>
+                    <BIconListTask variant="secondary"/>
+                  </h2>
+                </router-link>
+              </div>
+              <div class="col-4 col-sm-1 text-left text-sm-right">
+                {{ item.hours_estimated }}<br/>
+                {{ item.hours }}
+              </div>
+              <div class="col-4 col-sm-2 text-center text-sm-right" v-if="(item.type != 'free')">
+                {{ item.desired_price_hour }}<br/>
+                {{ item.price_hour }}
+              </div>
+              <div class="col-4 col-sm-2 text-right" v-if="(item.type != 'free')">
+                {{ item.total }}<br/>
+                {{ item.balance }}
+              </div>
+              <div class="col-4 text-center" v-if="(item.type == 'free')">
+                <p>Free project</p>
+              </div>
+            </SortableItem>
+          </SortableList>
+        </div>
       </card>
     </div>
   </div>
