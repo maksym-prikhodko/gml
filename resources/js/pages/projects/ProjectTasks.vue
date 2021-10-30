@@ -17,6 +17,10 @@
         </div>
       </div>
       <card id="tasks">
+        <div class="text-center mt-5 mb-5" v-if="(items.length == 0)">
+          <h1><BIconFolder/></h1>
+          <p>{{ $t("add_your_first_task") }}</p>
+        </div>
         <SortableList lockAxis="y" v-model="items" @input="saveOrder()" :distance="10">
           <SortableItem v-for="(item, index) in items" :index="parseInt(index)" :key="parseInt(index)" :value="item" v-bind:class="{ completed: item.completed }">
             <div class="col-2 col-sm-1 text-center">
@@ -39,8 +43,12 @@
           <div class="col-8 col-sm-10">
             <span class="task-name">
               <b-form @submit="onSubmit">
-                <b-form-input v-model="form.name" required :placeholder="$t('task_title_here')"></b-form-input>
-                <b-button class="mt-2" type="submit" variant="primary">{{ $t('create') }}</b-button>
+                <b-input-group class="mt-3">
+                  <b-form-input v-model="form.name" required :placeholder="$t('task_title_here')"></b-form-input>
+                  <b-input-group-append>
+                    <b-button type="submit" variant="primary">{{ $t('create') }}</b-button>
+                  </b-input-group-append>
+                </b-input-group>
               </b-form>
             </span>
           </div>
@@ -111,6 +119,7 @@ export default {
     },
     prepareDrag() {
       this.items = Object.values(this.tasks)
+      if (this.items.length == 0) this.newTaskOpen = true
     },
     toggleFocus(index, idTask) {
       var obj = {['id']: idTask}
