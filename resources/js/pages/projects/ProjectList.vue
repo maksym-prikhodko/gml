@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="row header">
-      <div class="col-12 col-sm-8">
+      <div class="col-9 col-sm-8">
         <h3 class="mb-4">{{ $t('projects') }}</h3>
       </div>
-      <div class="col-12 col-sm-4 text-right">
+      <div class="col-3 col-sm-4 text-right">
         <router-link :to="{ name: 'project.add' }">
           <img src="/img/ico-add.svg"/>
         </router-link>
@@ -14,7 +14,7 @@
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <div v-else>
-      <card id="dashboard">
+      <card id="project-list">
         <div v-if="(items.length == 0)">
           <div class="text-center mt-5 mb-5">
             <h4>{{ $t('onboarding_no_projects') }}</h4>
@@ -29,7 +29,7 @@
         <div v-else>
           <SortableList lockAxis="y" v-model="items" @input="saveOrder()" :distance="10">
             <SortableItem v-for="(item, index) in items" :index="parseInt(index)" :key="parseInt(index)" :value="item">
-              <div class="col-11 col-sm-6">
+              <div class="col-10 col-sm-6">
                 <div class="row">
                   <div class="col-sm-1 col-2 text-right">
                     <BIconStar @click="toggleFocus(index, item.id)" class="pointer pull-right" v-if="(item.focus == 0)" v-b-tooltip.hover :title="$t('mark_as_focus')"/>
@@ -45,7 +45,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-1 col-sm-1">
+              <div class="col-2 col-sm-1">
                 <router-link :to="{ name: 'project.tasks', params: { id: item.id } }">
                   <h2>
                     <BIconListTask variant="secondary"/>
@@ -146,7 +146,7 @@ export default {
 }
 </script>
 <style lang="scss">
-#dashboard {
+#project-list {
   .slot-project {
     margin-bottom: 1em;
     border-bottom: 1px solid #f0f0f0;
@@ -154,6 +154,7 @@ export default {
     .project-name {
       font-weight: bold;
       display: block;
+      font-size: 1.2em;
     }
     .client-name {
       font-style: italic;

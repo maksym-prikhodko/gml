@@ -26,7 +26,7 @@
           </router-link>
         </div>
       </div>
-      <div class="row">
+      <div class="row" v-if="(project.type != 'free')">
         <div class="col-12 col-sm-4">
           <card class="data-box">
             <div><img src="/img/ico-money-rise.svg"/></div>

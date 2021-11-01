@@ -164,6 +164,14 @@ export default {
     },
     onSubmit(evt) {
       evt.preventDefault()
+      let quickAddTask = {
+        'id': 0,
+        'name': this.form.name,
+        'desc': null,
+        'focus': 0,
+        'completed': 0,
+      }
+      this.items.push(quickAddTask)
       axios.post(['/api/tasks'], this.form).then(response => {
         this.form.name = null
         this.loadTasks()

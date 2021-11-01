@@ -23,7 +23,7 @@ mix.webpackConfig({
   },
   output: {
     chunkFilename: 'dist/js/[chunkhash].js',
-    path: mix.config.hmr ? '/' : path.resolve(__dirname, './public/build')
+    path: mix.config.hmr ? '/' : path.resolve(__dirname, './public')
   }
 })
 mix.then(() => {
@@ -31,7 +31,7 @@ mix.then(() => {
     process.nextTick(() => publishAseets())
   }
 })
-function publishAseets () {
+function publishAseets() {
   const publicDir = path.resolve(__dirname, './public')
   if (mix.inProduction()) {
     fs.removeSync(path.join(publicDir, 'dist'))

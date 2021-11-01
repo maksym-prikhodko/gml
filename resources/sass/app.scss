@@ -6,8 +6,10 @@
 @import 'elements/buttons';
 @import 'elements/transitions';
 body {
-    font-family: 'DM Mono', monospace;
+    font-family: 'Jost', sans-serif;
     font-weight: 100 !important;
+    font-size: 18px;
+    letter-spacing: 0.5px;
 }
 a {
     color: $primary-color !important;

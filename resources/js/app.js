@@ -9,9 +9,9 @@ window.axios = require('axios');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 Vue.config.productionTip = false
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
+import PortalVue from 'portal-vue'
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
-import PortalVue from 'portal-vue'
 Vue.use(PortalVue)
 new Vue({
   i18n,
