@@ -23,7 +23,7 @@ mix.webpackConfig({
   },
   output: {
     chunkFilename: 'dist/js/[chunkhash].js',
-    path: mix.config.hmr ? '/' : path.resolve(__dirname, './public')
+    path: mix.config.hmr ? '/' : path.resolve(__dirname, './public/build')
   }
 })
 mix.then(() => {
