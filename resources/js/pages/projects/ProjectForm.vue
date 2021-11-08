@@ -37,13 +37,13 @@
             <b-form-group class="mb-4" :label="$t('client')">
               <b-form-select size="lg" v-model="form.client_id" :options="clients" required></b-form-select>
             </b-form-group>
-            <b-row class="mb-4">
-              <b-col>
+            <div class="row mb-4">
+              <div class="col-12 col-md-4">
                 <b-form-group :label="$t('project_type')">
                   <b-form-select size="lg" v-model="form.type" :options="types" required></b-form-select>
                 </b-form-group>
-              </b-col>
-              <b-col v-if="(form.type != 'free')">
+              </div>
+              <div class="col-12 col-md-4" v-if="(form.type != 'free')">
                 <b-form-group :label="$t('desired_price_hour')" v-if="(form.type == 'hours')">
                   <b-input-group append="€">
                     <b-form-input size="lg" v-model="form.desired_price_hour" required></b-form-input>
@@ -54,15 +54,15 @@
                     <b-form-input size="lg" v-model="form.total_price" required></b-form-input>
                   </b-input-group>
                 </b-form-group>
-              </b-col>
-              <b-col>
+              </div>
+              <div class="col-12 col-md-4">
                 <b-form-group :label="$t('hours_estimated')">
                   <b-input-group :append="$t('hours')">
                     <b-form-input size="lg" v-model="form.hours_estimated" required></b-form-input>
                   </b-input-group>
                 </b-form-group>
-              </b-col>
-            </b-row>
+              </div>
+            </div>
             <b-button type="submit" variant="primary">{{ $t('create') }}</b-button>
           </b-form>
         </div>
