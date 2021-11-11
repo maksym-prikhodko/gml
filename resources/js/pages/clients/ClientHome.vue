@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="row header">
-      <div class="col-12 col-sm-8">
+      <div class="col-10 col-sm-8">
         <h3 class="mb-4">{{ $t('client') }} / {{ title }}</h3>
       </div>
-      <div class="col-12 col-sm-4 text-right menu-upright">
+      <div class="col-2 col-sm-4 text-right menu-upright">
         <router-link :to="{ name: 'clients' }">
           <h2>
             <img src="/img/ico-money-rise.svg"/>

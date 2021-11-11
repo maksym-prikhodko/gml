@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="row header">
-      <div class="col-12 col-sm-8">
+      <div class="col-10 col-sm-8">
         <h3 class="mb-4">{{ $t('clients') }}</h3>
       </div>
-      <div class="col-12 col-sm-4 text-right">
+      <div class="col-2 col-sm-4 text-right">
         <router-link :to="{ name: 'client.add' }">
           <img src="/img/ico-add.svg"/>
         </router-link>

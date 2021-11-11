@@ -5,10 +5,10 @@
     </div>
     <div v-else>
       <div class="row header">
-        <div class="col-12 col-sm-8">
+        <div class="col-8 col-sm-8">
           <h3 class="mb-4">{{ $t('project') }} / {{ title }}</h3>
         </div>
-        <div class="col-12 col-sm-4 text-right menu-upright">
+        <div class="col-4 col-sm-4 text-right menu-upright">
           <router-link :to="{ name: 'project.tasks', params: { id: project.id } }">
             <h2>
               <BIconListTask variant="secondary"/>
