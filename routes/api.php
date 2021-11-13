@@ -10,6 +10,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/update/project/focus', 'ProjectController@toggleFocus')->name('projects.update.focus');
     Route::post('/update/project/archive', 'ProjectController@toggleArchive')->name('projects.update.archive');
     Route::post('/order/projects', 'ProjectController@order')->name('projects.order');
+    Route::post('/project/raw', 'ProjectController@fetchRaw')->name('projects.raw');
     Route::resource('clients', 'ClientController');
     Route::get('/fetch/clients', 'ClientController@fetch')->name('clients.fetch');
     Route::get('/fetch/select/clients', 'ClientController@fetchForSelect')->name('clients.fetch.select');

@@ -40,28 +40,62 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         $item = Project::find($project->id);
-        $collection = [
-            'id' => $item->id,
-            'name' => $item->name,
-            'client' => $item->client->name,
-            'total' => currency_format((string) $item->total),
-            'balance' => currency_format((string) $item->balance),
-            'hours_estimated' => $item->hours_estimated . 'h',
-            'hours' => $item->hours . 'h',
-            'desired_price_hour' => currency_format((string) $item->desired_price_hour),
-            'price_hour' => $item->price_hour,
-            'focus' => $item->focus,
-            'order' => $item->order,
-            'archived' => $item->archived,
-            'type' => $item->type
-        ];
+        if ($item) {
+            $collection = [
+                'id' => $item->id,
+                'name' => $item->name,
+                'client' => $item->client->name,
+                'total' => currency_format((string) $item->total),
+                'balance' => currency_format((string) $item->balance),
+                'hours_estimated' => $item->hours_estimated . 'h',
+                'hours' => $item->hours . 'h',
+                'desired_price_hour' => currency_format((string) $item->desired_price_hour),
+                'price_hour' => $item->price_hour,
+                'focus' => $item->focus,
+                'order' => $item->order,
+                'archived' => $item->archived,
+                'type' => $item->type
+            ];
+        } else $collection = new Project();
         return ResponseBuilder::success($collection);
     }
+    public function fetchRaw(Request $request)
+    {
+        $item = Project::find($request->id);
+        if (!$item) $item = new Project();
+        return ResponseBuilder::success($item);
+    }    
     public function edit(Project $project)
     {
     }
     public function update(Request $request, Project $project)
     {
+        $request->validate([
+            'name' => 'required',
+            'client_id' => 'required|exists:clients,id',
+            'hours_estimated' => 'required|integer',
+        ]);
+        $item = Project::find($request->get('id'));
+        if ($item) {
+            $type = $request->get('type');
+            if ($type == "hours") {
+                $desired_price_hour = $request->get('desired_price_hour');
+                $total_price = $request->get('hours_estimated') * $desired_price_hour;
+            } else {
+                $desired_price_hour = 0;
+                $total_price = $request->get('total_price');
+                if ($total_price > 0) $desired_price_hour = $total_price / $request->get('hours_estimated');
+            }
+            $item->name = trim($request->get('name'));
+            $item->client_id = $request->get('client_id');
+            $item->type = $type;
+            $item->hours_estimated = $request->get('hours_estimated');
+            $item->total_price = $total_price;
+            $item->desired_price_hour = $desired_price_hour;
+            $item->save();
+            return ResponseBuilder::success($item);
+        }
+        return ResponseBuilder::error(250);
     }
     public function destroy(Project $project)
     {
@@ -69,7 +103,7 @@ class ProjectController extends Controller
     public function fetch()
     {
         $collection = [];
-        foreach (Project::where('archived', 0)->orderBy('order', 'asc')->orderBy('name', 'asc')->get() as $item) {
+        foreach (Project::where('archived', 0)->orderBy('order', 'asc')->orderBy('name', 'asc')->get() as $item) {            
             array_push($collection, [
                 'id' => $item->id,
                 'name' => $item->name,

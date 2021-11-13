@@ -16,7 +16,7 @@
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <div v-else>
-      <card v-if="!finished">
+      <card>
         <div v-if="(Object.values(clients).length == 0)">
           <div class="text-center mt-5 mb-5">
             <h4>{{ $t('onboarding_no_clients') }}</h4>
@@ -67,12 +67,6 @@
           </b-form>
         </div>
       </card>
-      <card v-else class="text-center p-5">
-        <h3 class="mb-4">{{ $t('project_succesfully_added')}}</h3>
-        <router-link :to="{ name: 'projects' }">
-          <b-button variant="success">{{ $t('back') }}</b-button>
-        </router-link>
-      </card>
     </div>
   </div>
 </template>
@@ -80,9 +74,10 @@
 export default {
   middleware: 'auth',
   data: () => ({
-    finished: false,
     loaded: false,
+    loadId: 0,
     form: {
+      id: '',
       name: '',
       client_id: '',
       type: 'fixed',
@@ -96,34 +91,60 @@ export default {
       { value: 'free', text: 'Free' },
     ],
     show: true,
+    project: [],
     clients: [],
   }),
   mounted () {
+    if (this.$route.params.id) this.loadId = this.$route.params.id;
     var that = this
     axios
     .all([
+      axios.post(['/api/project/raw'], {id:that.loadId}),
       axios.get('/api/fetch/select/clients'),
       ])
         .then(
         axios.spread(
-          function (clients) {
-            that.loaded = true
+          function (project, clients) {
+            that.project = project.data.data
             that.clients = clients.data.data
+            if (that.loadId > 0) that.loadProjectData()
+            that.loaded = true
           }
     ))
   },  
   methods: {
+    loadProjectData() {
+      this.form.id = this.project.id
+      this.form.name = this.project.name
+      this.form.client_id = this.project.client_id
+      this.form.type = this.project.type
+      this.form.hours_estimated = this.project.hours_estimated
+      this.form.desired_price_hour = this.project.desired_price_hour
+      this.form.total_price = this.project.total_price
+    },
     onSubmit(evt) {
       evt.preventDefault()
-      axios.post(['/api/projects'], this.form).then(response => {
-        this.finished = true
-      }).catch(error => {
-        if (error.response.status === 422) {
-          this.errors = error.response.data.errors || {};
-          $.each(this.errors, function (key, value) {
-          });
-        }
-      });
+            if (this.loadId > 0) {
+        axios.put(['/api/projects/'+this.loadId], this.form).then(response => {
+          this.$router.push({ name: 'project.home', params: { id: this.loadId } })
+        }).catch(error => {
+          if (error.response.status === 422) {
+            this.errors = error.response.data.errors || {};
+            $.each(this.errors, function (key, value) {
+            });
+          }
+        });
+            } else {
+        axios.post('/api/projects', this.form).then(response => {
+          this.$router.push({ name: 'projects' })
+        }).catch(error => {
+          if (error.response.status === 422) {
+            this.errors = error.response.data.errors || {};
+            $.each(this.errors, function (key, value) {
+            });
+          }
+        });
+      }
     },
   }
 }
