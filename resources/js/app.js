@@ -13,6 +13,9 @@ import PortalVue from 'portal-vue'
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 Vue.use(PortalVue)
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
+Vue.use(DatePicker)
 new Vue({
   i18n,
   store,

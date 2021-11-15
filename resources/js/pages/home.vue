@@ -11,15 +11,17 @@
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
     <div v-else>
-      <card id="dashboard">
-        This is the dashboard!
-      </card>
+      <Week></Week>
     </div>
   </div>
 </template>
 <script>
+import Week from './dashboard/Week';
 export default {
   middleware: 'auth',
+  components: {
+    Week,
+  },
   data: () => ({
     loaded: false,
     projects: Array,

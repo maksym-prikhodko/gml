@@ -187,35 +187,4 @@ export default {
 }
 </script>
 <style lang="scss">
-#tasks {
-  .slot-task {
-    margin-bottom: 1em;
-    border-bottom: 1px solid #f0f0f0;
-    padding-bottom: 1em;
-    .task-name {
-      display: block;
-    }
-  }
-  .completed {
-    opacity: 0.3;
-    text-decoration: line-through;
-  }
-  .slot-task:last-child {
-    border: none;
-    margin-bottom: 0;
-  }
-  .new-task {
-    opacity: 0;
-    height: 0px;
-    margin-top: 0;
-    padding-top: 0;
-    transition: 0.3s;
-  }
-  .new-task.newTaskOpened {
-    opacity: 1;
-    margin-top: 1em;
-    padding-top: 1em;
-    height: inherit; 
-  } 
-}
 </style>

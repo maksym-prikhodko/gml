@@ -5,6 +5,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/user', 'Auth\UserController@current');
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
+    Route::post('/dashboard/week', 'DashboardController@fetchWeek')->name('dashboard.week');
     Route::resource('projects', 'ProjectController');
     Route::get('/fetch/projects', 'ProjectController@fetch')->name('projects.fetch');
     Route::post('/update/project/focus', 'ProjectController@toggleFocus')->name('projects.update.focus');
@@ -19,6 +20,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/order/tasks', 'TaskController@order')->name('project.tasks.order');
     Route::post('/update/task/focus', 'TaskController@toggleFocus')->name('tasks.update.focus');
     Route::post('/update/task/completed', 'TaskController@toggleCompleted')->name('tasks.update.completed');
+    Route::resource('mits', 'MitController');
+    Route::post('/mits/order', 'MitController@order')->name('mits.order');
+    Route::post('/update/mit/completed', 'MitController@toggleCompleted')->name('mit.update.completed');
 });
 Route::group(['middleware' => 'guest:api'], function () {
     Route::post('login', 'Auth\LoginController@login');
