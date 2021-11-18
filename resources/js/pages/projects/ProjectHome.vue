@@ -14,11 +14,6 @@
           </h3>
         </div>
         <div class="col-4 col-sm-4 text-right menu-upright">
-          <router-link :to="{ name: 'project.tasks', params: { id: project.id } }">
-            <h2>
-              <BIconListTask variant="secondary"/>
-            </h2>
-          </router-link>
           <router-link :to="{ name: 'projects' }">
             <h2>
               <BIconClockFill variant="secondary"/>
@@ -31,7 +26,7 @@
           </router-link>
         </div>
       </div>
-      <div class="row" v-if="(project.type != 'free')">
+      <div class="row mb-3" v-if="(project.type != 'free')">
         <div class="col-12 col-sm-4">
           <card class="data-box">
             <div><img src="/img/ico-money-rise.svg"/></div>
@@ -51,14 +46,19 @@
           </card>
         </div>
       </div>
+      <ProjectTasks :id="project.id"></ProjectTasks>
       <BIconFolderPlus @click="toggleArchive()" class="archive-icon pointer pull-right" v-if="(project.archived == 0)" v-b-tooltip.hover :title="$t('archive_project')"/>
       <BIconFolderMinus @click="toggleArchive()" class="archive-icon pointer pull-right" v-else v-b-tooltip.hover :title="$t('unarchive_project')"/>
     </div>
   </div>
 </template>
 <script>
+import ProjectTasks from './ProjectTasks';
 export default {
   middleware: 'auth',
+  components: {
+    ProjectTasks,
+  },
   data: () => ({
     loaded: false,
     title: '...',

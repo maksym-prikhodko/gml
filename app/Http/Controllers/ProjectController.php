@@ -117,7 +117,8 @@ class ProjectController extends Controller
                 'focus' => $item->focus,
                 'order' => $item->order,
                 'archived' => $item->archived,
-                'type' => $item->type
+                'type' => $item->type,
+                'tasks_count' => $item->tasks()->count(),
             ]);
         }
         return ResponseBuilder::success($collection);

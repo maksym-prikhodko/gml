@@ -66,17 +66,4 @@ a {
     border: none;
     margin-bottom: 0;
   }
-  .new-task {
-    opacity: 0;
-    height: 0px;
-    margin-top: 0;
-    padding-top: 0;
-    transition: 0.3s;
-  }
-  .new-task.newTaskOpened {
-    opacity: 1;
-    margin-top: 1em;
-    padding-top: 1em;
-    height: inherit; 
-  } 
 }

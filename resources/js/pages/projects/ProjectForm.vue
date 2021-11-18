@@ -63,7 +63,10 @@
                 </b-form-group>
               </div>
             </div>
-            <b-button type="submit" variant="primary">{{ $t('create') }}</b-button>
+            <b-button type="submit" variant="primary">
+              <span v-if="(loadId > 0)">{{ $t('update') }}</span>
+              <span v-else>{{ $t('create') }}</span>
+            </b-button>
           </b-form>
         </div>
       </card>

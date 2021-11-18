@@ -6,15 +6,27 @@
     <div v-else>
       <div class="row header">
         <div class="col-10 col-sm-8">
-          <h3 class="mb-4">{{ $t('projects') }} / {{ project.name }} / {{ $t('tasks') }}</h3>
+          <h3 class="mb-4">{{ $t('tasks') }}</h3>
         </div>
         <div class="col-2 col-sm-4 text-right">
-          <router-link :to="{ name: 'project.home', params: { id: project.id } }">
-            <h2>
-              <BIconArrowLeftCircleFill variant="secondary"/>
-            </h2>
-          </router-link>
+          <h2 v-if="newTaskOpen"><BIconArrowLeftCircle @click='toggleNewTask()' variant="secondary"/></h2>
+          <h2 v-else><BIconPlusCircleFill @click='toggleNewTask()' variant="secondary"/></h2>
         </div>
+      </div>
+      <div class="row new-task" v-bind:class="{ newTaskOpened: newTaskOpen }">
+        <div class="col-10 col-sm-11">
+          <span class="task-name">
+            <b-form @submit="onSubmit">
+              <b-input-group>
+                <b-form-input v-model="form.name" required :placeholder="$t('task_title_here')"></b-form-input>
+                <b-input-group-append>
+                  <b-button type="submit" class="w-100" variant="primary">{{ $t('create') }}</b-button>
+                </b-input-group-append>
+              </b-input-group>
+            </b-form>
+          </span>
+        </div>
+        <div class="col-2 col-sm-1 text-left text-sm-right"></div>
       </div>
       <card id="tasks">
         <div class="text-center mt-5 mb-5" v-if="(items.length == 0)">
@@ -38,29 +50,7 @@
             </div>
           </SortableItem>
         </SortableList>
-        <div class="row slot-task new-task" v-bind:class="{ newTaskOpened: newTaskOpen }">
-          <div class="col-2 col-sm-1 text-left"></div>
-          <div class="col-8 col-sm-10">
-            <span class="task-name">
-              <b-form @submit="onSubmit">
-                <b-input-group class="mt-3">
-                  <b-form-input v-model="form.name" required :placeholder="$t('task_title_here')"></b-form-input>
-                  <b-input-group-append>
-                    <b-button type="submit" variant="primary">{{ $t('create') }}</b-button>
-                  </b-input-group-append>
-                </b-input-group>
-              </b-form>
-            </span>
-          </div>
-          <div class="col-2 col-sm-1 text-left text-sm-right"></div>
-        </div>
       </card>
-      <div class="row mt-4">
-        <div class="col-12 text-right">
-          <h2 v-if="newTaskOpen"><BIconArrowLeftCircle @click='toggleNewTask()' variant="secondary"/></h2>
-          <h2 v-else><BIconPlusCircleFill @click='toggleNewTask()' variant="secondary"/></h2>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -77,6 +67,7 @@ const SortableItem = {
 };
 export default {
   middleware: 'auth',
+  props: ['id'],
   components: {
     ContainerMixin,
     ElementMixin,
@@ -95,7 +86,7 @@ export default {
     },
   }),
   mounted () {
-    this.id = this.$route.params.id;
+    this.id = this.$props.id;
     this.loadTasks()
   },  
   methods: {
@@ -171,7 +162,7 @@ export default {
         'focus': 0,
         'completed': 0,
       }
-      this.items.push(quickAddTask)
+      this.items.unshift(quickAddTask)
       axios.post(['/api/tasks'], this.form).then(response => {
         this.form.name = null
         this.loadTasks()
@@ -187,4 +178,16 @@ export default {
 }
 </script>
 <style lang="scss">
+.new-task {
+  opacity: 0;
+  height: 0px;
+  margin-top: 0;
+  padding-top: 0;
+  transition: 0.3s;
+}
+.new-task.newTaskOpened {
+  opacity: 1;
+  height: inherit; 
+  margin-bottom: 1em;
+} 
 </style>

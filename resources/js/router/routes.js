@@ -12,7 +12,6 @@ export default [
   { path: '/projects', name: 'projects', component: page('projects/ProjectList.vue') },
   { path: '/project/add', name: 'project.add', component: page('projects/ProjectForm.vue') },
   { path: '/project/:id', name: 'project.home', component: page('projects/ProjectHome.vue') },
-  { path: '/project/tasks/:id', name: 'project.tasks', component: page('projects/ProjectTasks.vue') },
   { path: '/project/edit/:id', name: 'project.edit', component: page('projects/ProjectForm.vue') },
   { path: '/clients', name: 'clients', component: page('clients/ClientsList.vue') },
   { path: '/client/add', name: 'client.add', component: page('clients/ClientForm.vue') },

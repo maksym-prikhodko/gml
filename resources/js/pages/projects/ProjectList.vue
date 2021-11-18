@@ -45,11 +45,13 @@
                   </div>
                 </div>
               </div>
-              <div class="col-2 col-sm-1">
-                <router-link :to="{ name: 'project.tasks', params: { id: item.id } }">
-                  <h2>
-                    <BIconListTask variant="secondary"/>
-                  </h2>
+              <div class="col-2 col-sm-1 tet-center">
+                <router-link :to="{ name: 'project.home', params: { id: item.id } }">
+                  <h4>
+                    <span class="badge badge-secondary" v-if="(item.tasks_count) > 0">
+                      {{ item.tasks_count }}
+                    </span>
+                  </h4>
                 </router-link>
               </div>
               <div class="col-4 col-sm-1 text-left text-sm-right">

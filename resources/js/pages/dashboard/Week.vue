@@ -6,16 +6,20 @@
     <card id="mits">
       <div class="card-header">
         <div class="row">
-          <div class="col-1">
-            <BIconArrowLeftSquare @click="previousWeek()" v-if="(this.which == 'this')"/>
-            <BIconArrowLeftSquare @click="thisWeek()" v-else-if="(this.which == 'next')"/>
+          <div class="col-2">
+            <h2>
+              <BIconArrowLeftSquare @click="previousWeek()" v-if="(this.which == 'this')" class="pointer"/>
+              <BIconArrowLeftSquare @click="thisWeek()" v-else-if="(this.which == 'next')" class="pointer"/>
+            </h2>
           </div>
-          <div class="col-10">
+          <div class="col-8">
             <h3>{{ $t('week_view') }}: {{ title }}</h3>
           </div>
-          <div class="col-1">
-            <BIconArrowRightSquare @click="nextWeek()" v-if="(this.which == 'this')"/>
-            <BIconArrowRightSquare @click="thisWeek()" v-else-if="(this.which == 'previous')"/>
+          <div class="col-2">
+            <h2>
+              <BIconArrowRightSquare @click="nextWeek()" v-if="(this.which == 'this')" class="pointer"/>
+              <BIconArrowRightSquare @click="thisWeek()" v-else-if="(this.which == 'previous')" class="pointer"/>
+            </h2>
           </div>
         </div>
       </div>
@@ -48,7 +52,7 @@
           </div>
           <div class="col-12 col-md-4">
             <b-form-select v-model="form.day" class="mb-3">
-              <b-form-select-option :value="items[0].day">{{ $t('monday') }}</b-form-select-option>
+              <b-form-select-option :value="items[0].day" selected>{{ $t('monday') }}</b-form-select-option>
               <b-form-select-option :value="items[1].day">{{ $t('tuesday') }}</b-form-select-option>
               <b-form-select-option :value="items[2].day">{{ $t('wednesday') }}</b-form-select-option>
               <b-form-select-option :value="items[3].day">{{ $t('thursday') }}</b-form-select-option>
@@ -57,7 +61,7 @@
             </b-form-select>
           </div>
           <div class="col-12 col-md-2">
-            <b-button type="submit" variant="primary" class="w-100">{{ $t('create') }}</b-button>
+            <b-button type="submit" variant="primary" class="w-100">{{ $t('add_task') }}</b-button>
           </div>
         </div>
       </b-form>

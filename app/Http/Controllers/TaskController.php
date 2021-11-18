@@ -15,9 +15,9 @@ class TaskController extends Controller
         $request->validate([
             'name' => 'required',
         ]);
-        $lastTask = Task::where('project_id', $request->get('project_id'))->orderBy('order', 'desc')->first(['order']);
-        if (!$lastTask) $order = 1; 
-        else $order = $lastTask->order + 1;
+        $lastTask = Task::where('project_id', $request->get('project_id'))->orderBy('order', 'asc')->first(['order']);
+        if (!$lastTask) $order = 0; 
+        else $order = $lastTask->order - 1;
         $item = new Task([
             'name' => trim($request->get('name')),
             'project_id' => $request->get('project_id'),
