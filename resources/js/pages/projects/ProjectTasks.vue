@@ -9,12 +9,12 @@
           <h3 class="mb-4">{{ $t('tasks') }}</h3>
         </div>
         <div class="col-2 col-sm-4 text-right">
-          <h2 v-if="newTaskOpen"><BIconArrowLeftCircle @click='toggleNewTask()' variant="secondary"/></h2>
+          <h2 v-if="newTaskOpen"><BIconXCircle @click='toggleNewTask()' variant="secondary"/></h2>
           <h2 v-else><BIconPlusCircleFill @click='toggleNewTask()' variant="secondary"/></h2>
         </div>
       </div>
       <div class="row new-task" v-bind:class="{ newTaskOpened: newTaskOpen }">
-        <div class="col-10 col-sm-11">
+        <div class="col-12">
           <span class="task-name">
             <b-form @submit="onSubmit">
               <b-input-group>
@@ -26,7 +26,6 @@
             </b-form>
           </span>
         </div>
-        <div class="col-2 col-sm-1 text-left text-sm-right"></div>
       </div>
       <card id="tasks">
         <div class="text-center mt-5 mb-5" v-if="(items.length == 0)">
