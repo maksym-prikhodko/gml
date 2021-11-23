@@ -39,9 +39,12 @@
               <BIconCheckCircle @click="toggleCompleted(index, item.id)" class="pointer pull-right" v-else v-b-tooltip.hover :title="$t('unmark_as_focus')"/>
             </div>
             <div class="col-8 col-sm-10">
-              <span class="task-name">
+              <span class="task-name" v-b-modal="'modal'+item.id">
                 {{ item.name }}
               </span>
+              <b-modal :id="'modal'+item.id" size="xl" centered header-class="d-none" footer-class="d-none">
+                <Task :id="item.id"></Task>
+              </b-modal>
             </div>
             <div class="col-2 col-sm-1 text-left text-sm-right">
               <BIconStar @click="toggleFocus(index, item.id)" class="pointer pull-right" v-if="(item.focus == 0)" v-b-tooltip.hover :title="$t('mark_as_focus')"/>
@@ -55,6 +58,7 @@
 </template>
 <script>
 import { ContainerMixin, ElementMixin } from 'vue-slicksort';
+import Task from '../tasks/Task.vue';
 const SortableList = {
   mixins: [ContainerMixin],
   template: `<div><slot /></div>`
@@ -72,6 +76,7 @@ export default {
     ElementMixin,
     SortableItem,
     SortableList,
+    Task,
   },
   data: () => ({
     loaded: false,
@@ -85,6 +90,9 @@ export default {
     },
   }),
   mounted () {
+    this.$root.$on('bv::modal::hide', (bvEvent, modalId) => {
+      this.loadTasks();
+    })
     this.id = this.$props.id;
     this.loadTasks()
   },  

@@ -4,6 +4,7 @@ use App\ApiCode;
 use App\Task;
 use Illuminate\Http\Request;
 use MarcinOrlowski\ResponseBuilder\ResponseBuilder;
+use Stevebauman\Purify\Facades\Purify;
 class TaskController extends Controller
 {
     public function index()
@@ -46,6 +47,17 @@ class TaskController extends Controller
     }
     public function update(Request $request, Task $task)
     {
+        $request->validate([
+            'name' => 'required',
+        ]);
+        $item = Task::find($request->get('id'));
+        if ($item) {
+            $item->name = trim($request->get('name'));
+            $item->desc = Purify::clean($request->get('desc'));
+            $item->save();
+            return ResponseBuilder::success($item);
+        }
+        return ResponseBuilder::error(250);        
     }
     public function destroy(Task $task)
     {

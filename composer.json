@@ -15,6 +15,7 @@
         "laravel/ui": "^2.0",
         "marcin-orlowski/laravel-api-response-builder": "^7.1",
         "morningtrain/toggl-api": "^1.0",
+        "stevebauman/purify": "^3.0",
         "torann/currency": "^1.0",
         "tymon/jwt-auth": "^1.0.0"
     },
