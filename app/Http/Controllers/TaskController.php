@@ -39,6 +39,7 @@ class TaskController extends Controller
             'due_date' => $item->due_date,
             'inbox' => $item->inbox,
             'order' => $item->order,
+            'uploads' => $item->getMedia('taskfile'),
         ];
         return ResponseBuilder::success($collection);
     }

@@ -16,6 +16,10 @@ Vue.use(PortalVue)
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
 Vue.use(DatePicker)
+import VueFileAgent from 'vue-file-agent';
+import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css';
+Vue.use(VueFileAgent);
+Vue.use(VueFileAgentStyles);
 new Vue({
   i18n,
   store,

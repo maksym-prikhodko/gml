@@ -13,8 +13,10 @@
         "laravel/socialite": "^4.3",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
+        "league/flysystem-aws-s3-v3": "^1.0",
         "marcin-orlowski/laravel-api-response-builder": "^7.1",
         "morningtrain/toggl-api": "^1.0",
+        "plank/laravel-mediable": "^4.2",
         "stevebauman/purify": "^3.0",
         "torann/currency": "^1.0",
         "tymon/jwt-auth": "^1.0.0"

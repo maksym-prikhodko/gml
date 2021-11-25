@@ -28,6 +28,7 @@
     "tiptap-extensions": "^1.29.1",
     "vform": "^1.0.1",
     "vue": "^2.6.11",
+    "vue-file-agent": "^1.7.3",
     "vue-i18n": "^8.18.2",
     "vue-meta": "^1.6.0",
     "vue-router": "^3.3.2",

@@ -3,23 +3,40 @@
     <div v-if="!loaded">
       <div class="spinner-border text-secondary" role="status"></div>
     </div>
-    <div v-else class="row p-4">
-      <div class="col-12 col-md-9">
-        <b-form-input @change="updateTask()" size="lg" v-model="item.name" required class="inline-input mb-3 text-lg"></b-form-input>
-        <vue-editor @blur="updateTask()" class="inline-input" v-model="item.desc" id="editor" :editorToolbar="customToolbar" useCustomImageHandler @image-added="handleImageAdded"> </vue-editor>
+    <div v-else class="p-4">
+      <div class="row">
+        <div class="col-12 col-md-9">
+          <b-form-input @change="updateTask()" size="lg" v-model="item.name" required class="inline-input mb-3 text-lg"></b-form-input>
+        </div>
+        <div class="col-12 col-md-3">
+        </div>
       </div>
-      <div class="col-12 col-md-3">
-        {{ item.id }}
+      <div class="row mb-4">
+        <div class="col-12">
+          <vue-editor @blur="updateTask()" class="inline-input" v-model="item.desc" id="editor" :editorToolbar="customToolbar"> </vue-editor>
+        </div>
+      </div>
+      <div class="mb-3" v-for="(file, index) in item.uploads" :index="parseInt(index)" :key="parseInt(index)" :value="file">
+        <TaskFileSlot :file="file"></TaskFileSlot>
+      </div>
+      <div class="row mb-4">
+        <div class="col-12">
+          <Uploader model="task" :id="item.id"></Uploader>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
 import { VueEditor } from "vue2-editor";
+import Uploader from "../uploader/Uploader.vue";
+import TaskFileSlot from "./TaskFileSlot.vue";
 export default {
   middleware: 'auth',
   components: {
     VueEditor,
+    Uploader,
+    TaskFileSlot,
   },
   props: ['id'],
   data: () => ({
@@ -44,22 +61,6 @@ export default {
     ))
   },  
   methods: {
-    handleImageAdded: function(file, Editor, cursorLocation, resetUploader) {
-      var formData = new FormData();
-      formData.append("image", file);
-      axios({
-        url: "/api/image/upload",
-        method: "POST",
-        data: formData
-      })
-        .then(result => {
-          let url = result.data.url;           Editor.insertEmbed(cursorLocation, "image", url);
-          resetUploader();
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
     updateTask() {
      axios.patch(['/api/tasks/'+this.item.id], this.item).then(response => {
       }).catch(error => {

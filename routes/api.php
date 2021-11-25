@@ -23,6 +23,11 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('mits', 'MitController');
     Route::post('/mits/order', 'MitController@order')->name('mits.order');
     Route::post('/update/mit/completed', 'MitController@toggleCompleted')->name('mit.update.completed');
+    Route::resource('uploads', 'UploadController');
+    Route::post('/upload/files/{taskId}', 'UploadController@uploadFiles')->name('upload.files');
+    Route::post('/upload/file/delete', 'UploadController@deleteFile')->name('upload.file.delete');
+    Route::get('/upload/file/get/{mediableId}/{mediaId}', 'UploadController@fetchFile')->name('upload.file.fetch');
+    Route::get('/upload/file/show/{mediableId}/{mediaId}', 'UploadController@fetchFileShowImage')->name('upload.file.show');
 });
 Route::group(['middleware' => 'guest:api'], function () {
     Route::post('login', 'Auth\LoginController@login');

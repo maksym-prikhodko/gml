@@ -40,6 +40,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         \Torann\Currency\CurrencyServiceProvider::class,
+        Plank\Mediable\MediableServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
@@ -83,5 +84,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Currency' => \Torann\Currency\Facades\Currency::class,
+        'MediaUploader' => Plank\Mediable\MediaUploaderFacade::class,
     ],
 ];
