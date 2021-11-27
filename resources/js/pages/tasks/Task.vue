@@ -43,7 +43,7 @@ export default {
     loaded: false,
     loadId: null,
     item: Array,
-    customToolbar: [["bold", "italic", "underline"], [{ list: "ordered" }, { list: "bullet" }], ["link", "image"]]
+    customToolbar: [["bold", "italic", "underline"], [{ list: "ordered" }, { list: "bullet" }], ["link"]]
   }),
   mounted () {
     this.loadId = this.$props.id;

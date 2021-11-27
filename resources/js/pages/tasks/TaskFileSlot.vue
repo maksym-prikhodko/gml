@@ -1,7 +1,7 @@
 <template>
   <div class="slot-preview-file" v-if="!deleted">
     <div class="row">
-      <div class="col-10">
+      <div class="col-9">
         <a :href="'/api/upload/file/get/'+item.pivot.mediable_id+'/'+item.id" target="_blank">
           <span v-if="isImage()">
             <img :src="'/api/upload/file/show/'+item.pivot.mediable_id+'/'+item.id" class="img-responsive img-preview mb-2"/>
@@ -11,7 +11,7 @@
           </span>
         </a>
       </div>
-      <div class="col-2 text-right">
+      <div class="col-3 text-right">
         <span @click="sureYouWannaDelete()" v-if="!sureDelete" class="text-gray-200 pointer">
           <BIconTrash/>
         </span>
